@@ -10,11 +10,24 @@
           <button type="submit"> Submit </button>
       </form> -->
 
-    <h1>Name : {{ getFullname() }}</h1>
+    <h1>Name : {{ getFullname }}</h1>
     <h1>Lastname {{ lastName }}</h1>
     <!-- <h2>Nickname {{ nickname }}</h2> -->
     <h1>Age {{ age }}</h1>
-      {{ isVisible }}
+    <h1>Salary : {{ salary }} ฿ </h1>
+    <h1>Salary/Year : {{ getIncome}} ฿ </h1>
+    <h1>Department : {{ getDepartment  }}</h1>
+
+    <button @click="addSalary(5000)">Add Salary</button>
+    
+    <!-- <h2>Method1 : {{ getRandomByMethod() }}</h2>
+    <h2>Method2 : {{ getRandomByMethod() }}</h2>
+      <hr>
+    <h2>Computed1 : {{ getRandomByComputed }}</h2>
+    <h2>Computed2 : {{ getRandomByComputed }}</h2> -->
+
+
+
     <button @click="toggleVisible">{{ isVisible ? "Hide" : "Display" }} Detail</button>  
     <article v-show="isVisible">
       <p>Address : <span v-html="address"></span></p>
@@ -61,17 +74,21 @@ export default {
       social: "https://www.flaticon.com",
       hobby: ["Test", "Football", "Music", "Music", "Music"],
       general: { gender: "men", weight: 70, height: 170, status: false },
-      isVisible:false
+      isVisible:false,
+      salary: 20000
     };
   },
   methods: {
-    getFullname() {
-      // return this.firstName + this.lastName
-      return `${this.firstName} ${this.lastName}`;
-    },
+   
     toggleVisible(){
         this.isVisible = !this.isVisible;
+    },
+    addSalary(value){
+      this.salary += value;
     }
+    // getRandomByMethod(){
+    //     return Math.random();
+    // }
     // showData(){
     //   alert(this.firstName)
     // },
@@ -93,6 +110,31 @@ export default {
 
     // }
   },
+  computed:{
+    getFullname() {
+      // return this.firstName + this.lastName
+      return `${this.firstName} ${this.lastName}`;
+    },
+    getIncome(){
+      return this.salary * 12 ;
+    },
+    getDepartment(){
+      return this.salary >= 35000 ? "Project manager " : "Programmer"
+    }
+    // getRandomByComputed(){
+    //     return Math.random();
+    // }
+  },
+  watch:{
+    salary(value){
+      if(value > 50000){
+        alert("Salary should not exceed 50,000 ฿")
+        setTimeout(()=>{
+          this.salary = 50000
+        },2000)
+      }
+    }
+  }
 };
 </script>
 
